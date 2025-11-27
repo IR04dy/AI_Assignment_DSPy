@@ -22,7 +22,7 @@ outputs_hybrid.jsonl
 AI_Assignment_Report.docx / .pdf
 ```
 
-##Description
+## Description
 The system:
 Routes each question (SQL / Hybrid / RAG)
 Retrieves relevant policy or KPI docs via TF-IDF
