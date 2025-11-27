@@ -2,3 +2,8 @@
 
 This project implements a hybrid agent that answers retail analytics questions using both RAG (TF-IDF) and SQL execution over the Northwind dataset.
 Built using DSPy, LangGraph, SQLite, and a local Ollama model (Phi-3.5 Mini).
+
+Run the Agent
+```python
+python run_agent_hybrid.py --batch sample_questions_hybrid_eval.jsonl --out outputs_hybrid.jsonl
+'''
