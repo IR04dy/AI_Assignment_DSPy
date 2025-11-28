@@ -31,3 +31,5 @@ Generates SQL using DSPy modules
 Executes against SQLite Northwind DB
 Repairs SQL on errors (retry loop)
 Produces structured output with final answer, SQL, confidence, and citations
+
+[Assignment Report (PDF)](Report.pdf)
