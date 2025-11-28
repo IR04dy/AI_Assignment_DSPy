@@ -44,8 +44,6 @@ def _truncate_explanation(text: str, max_sentences: int = 2) -> str:
     if not text:
         return ""
 
-    # Very simple sentence split on period/question/exclamation.
-    # Good enough for this assignment.
     sentences = []
     current = []
     for ch in text:

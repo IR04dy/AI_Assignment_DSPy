@@ -8,9 +8,6 @@ This module defines:
   question + retrieved docs.
 - SynthSignature / SynthModule: synthesize the final typed answer with
   explanation, confidence, and citations.
-
-The inline planner logic is kept simple and deterministic, tailored to the
-assignment docs (marketing calendar, KPI definitions, catalog).
 """
 
 from __future__ import annotations
@@ -215,11 +212,7 @@ class SynthSignature(dspy.Signature):
 
 
 class RouterModule(dspy.Module):
-    """Wrapper around a DSPy classifier for routing.
-
-    You can later optimize this with a small labeled set and MIPROv2 or
-    BootstrapFewShot.
-    """
+    """Wrapper around a DSPy classifier for routing."""
 
     def __init__(self, lm: Optional[dspy.LM] = None):
         super().__init__()
@@ -241,17 +234,7 @@ class RouterModule(dspy.Module):
 
 
 class NL2SQLModule(dspy.Module):
-    """NL→SQL module with inline constraints planner.
-
-    Usage:
-
-        nl2sql = NL2SQLModule(lm)
-        sql, constraints = nl2sql(
-            question=question,
-            schema=schema_str,
-            retrieved_chunks=retrieved_chunks,
-        )
-    """
+    """NL→SQL module with inline constraints planner."""
 
     def __init__(self, lm: Optional[dspy.LM] = None):
         super().__init__()

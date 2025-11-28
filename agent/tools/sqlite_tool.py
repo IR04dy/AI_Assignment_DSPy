@@ -1,7 +1,6 @@
 """SQLite tool for the Northwind database.
 
-This module provides a small, focused API around the local
-`data/northwind.sqlite` file required by the assignment.
+This module provides a small, focused API around the local `data/northwind.sqlite`
 
 It is designed to be called from LangGraph nodes, DSPy modules, or
 simple scripts. The main responsibilities are:
@@ -11,16 +10,6 @@ simple scripts. The main responsibilities are:
 - Introspect the schema using PRAGMA to build a text description that can be
   passed into NL→SQL modules.
 
-Example usage:
-
-    from agent.tools.sqlite_tool import (
-        get_connection,
-        execute_sql,
-        get_schema_description,
-    )
-
-    rows = execute_sql("SELECT * FROM Customers LIMIT 3")
-    schema_str = get_schema_description()
 
 The LangGraph SQL executor node can simply call `execute_sql` and attach the
 `sql` string + any errors to the agent state.
@@ -41,12 +30,7 @@ DEFAULT_DB_PATH = Path("data") / "northwind.sqlite"
 # ---------------------------------------------------------------------------
 
 def get_connection(db_path: Path | str = DEFAULT_DB_PATH) -> sqlite3.Connection:
-    """Return a *new* SQLite connection to the Northwind DB.
-
-    The connection is opened in read-only mode when possible to avoid
-    accidental writes. For older SQLite versions that don't support the
-    URI/read-only trick, it falls back to normal mode.
-    """
+    """Return a *new* SQLite connection to the Northwind DB."""
 
     db_path = Path(db_path)
 
@@ -159,27 +143,16 @@ def get_schema_description(db_path: Path | str = DEFAULT_DB_PATH) -> str:
 
     This string is meant to be fed into NL→SQL DSPy modules so the model
     knows which tables/columns are available.
-
-    Example output (simplified):
-
-        Orders(OrderID, CustomerID, EmployeeID, OrderDate, ...)
-        "Order Details"(OrderID, ProductID, UnitPrice, Quantity, Discount)
-        Products(ProductID, ProductName, SupplierID, CategoryID, UnitPrice, ...)
-        Customers(CustomerID, CompanyName, Country, ...)
-
-    You can further restrict/format this according to the assignment's
-    suggested canonical table names.
     """
 
     tables = list_tables(db_path)
 
-    # Focus on canonical Northwind tables used in the assignment
+    # Focus on tables will be used
     preferred_order = [
         "Orders",
         "Order Details",
         "Products",
         "Customers",
-        "Categories",
         "Suppliers",
     ]
 

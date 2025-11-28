@@ -1,27 +1,7 @@
 """TF-IDF based retriever for local markdown docs.
 
 This module implements a very small, dependency-light retriever using
-scikit-learn's TfidfVectorizer. It is designed to satisfy the assignment's
-requirement for a simple RAG component over the docs/ folder.
-
-Expected usage from your LangGraph nodes:
-
-    from agent.rag.retrieval import TfidfRetriever
-
-    retriever = TfidfRetriever(docs_dir="./docs")
-    retriever.build_index()  # once at startup
-    chunks = retriever.retrieve_topk("question about beverages", k=5)
-
-Each returned chunk is a dict with:
-    {
-        "id": "product_policy.md::chunk0",
-        "source": "product_policy.md",
-        "text": "...chunk text...",
-        "score": 0.732
-    }
-
-You can then pass these into your Planner and Synthesizer nodes and also
-use the `id` field directly as a citation (e.g., "product_policy.md::chunk0").
+scikit-learn's TfidfVectorizer.
 """
 
 from __future__ import annotations
@@ -38,9 +18,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 class DocChunk:
     """Represents a single retrievable chunk from a markdown document."""
 
-    id: str          # e.g. "product_policy.md::chunk0"
-    source: str      # e.g. "product_policy.md"
-    text: str        # the actual chunk text
+    id: str
+    source: str
+    text: str
 
 
 class TfidfRetriever:
@@ -81,10 +61,7 @@ class TfidfRetriever:
         self.tfidf_matrix = self.vectorizer.fit_transform(texts)
 
     def retrieve_topk(self, query: str, k: int = 5) -> List[Dict[str, Any]]:
-        """Retrieve top-k chunks for a natural-language query.
-
-        Returns a list of dicts: [{id, source, text, score}, ...]
-        """
+        """Retrieve top-k chunks for a natural-language query."""
 
         if self.vectorizer is None or self.tfidf_matrix is None:
             raise RuntimeError("TF-IDF index has not been built. Call build_index() first.")
@@ -168,11 +145,7 @@ _retriever_instance: Optional[TfidfRetriever] = None
 
 
 def get_retriever(docs_dir: str | Path = "./docs") -> TfidfRetriever:
-    """Get a global TfidfRetriever instance, building the index on first use.
-
-    This is handy in small scripts / agents so you don't have to manage the
-    retriever lifecycle manually.
-    """
+    """Get a global TfidfRetriever instance, building the index on first use."""
 
     global _retriever_instance
     if _retriever_instance is None:

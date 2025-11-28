@@ -197,9 +197,6 @@ def _augment_citations(
 # Global singletons (LM-backed modules and retriever)
 # ---------------------------------------------------------------------------
 
-# NOTE: In your actual environment you will initialize a DSPy LM here
-# (e.g., using a local Phi-3.5-mini-instruct endpoint via Ollama).
-
 dspy.configure(
     lm=dspy.LM(
         "ollama/phi3.5:3.8b-mini-instruct-q4_K_M",
